@@ -101,7 +101,7 @@ Resources:
         - IpProtocol: tcp
           FromPort: 22
           ToPort: 22
-          CidrIp: 113.161.91.9/32
+          CidrIp: 113.161.91.56/32
 
   # Security Group cho Private EC2 instance
   PrivateEC2SecurityGroup:
@@ -123,6 +123,7 @@ Resources:
       SubnetId: !Ref PublicSubnet
       SecurityGroupIds: 
         - !Ref PublicEC2SecurityGroup
+      KeyName: cloudfins
       ImageId: ami-0ebfd941bbafe70c6  # AMI ID cần thay thế theo region của bạn
 
   # EC2 Instance trong Private Subnet
@@ -133,4 +134,5 @@ Resources:
       SubnetId: !Ref PrivateSubnet
       SecurityGroupIds: 
         - !Ref PrivateEC2SecurityGroup
+      KeyName: cloudfins
       ImageId: ami-0ebfd941bbafe70c6  # AMI ID cần thay thế theo region của bạn
