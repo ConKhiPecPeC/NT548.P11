@@ -8,7 +8,7 @@ variable "cidr_public_subnet" {
     default = "10.0.1.0/24"
 }
 variable "ami" {
-    default = "ami-032346ab877c418af"
+    default = "ami-0fff1b9a61dec8a5f"
 }
 variable "instance_type" {
     default = "t2.micro"
