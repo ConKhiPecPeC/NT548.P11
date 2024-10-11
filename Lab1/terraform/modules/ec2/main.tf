@@ -6,6 +6,8 @@ resource "aws_instance" "public_instance" {
   security_groups = [var.public_security_group.id]
   key_name = "TF_key"
 
+  associate_public_ip_address = true
+
   tags = {
     Name = "Public_instance"
   }
