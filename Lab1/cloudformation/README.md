@@ -31,17 +31,19 @@ _File yaml đã cấu hình với tất cả các tài nguyên cần thiết.
 ## Các bước triển khai
 ### Cách 1: Sử dụng AWS Management Console
 Bước 1: Chuẩn bị tệp YAML
-    Tạo một tệp YAML duy nhất (ví dụ: group_19.yml) với tất cả các tài nguyên trong đó (VPC, Subnets, Route Tables, NAT Gateway, EC2 Instances, và Security Groups).
+Tạo một tệp YAML duy nhất (ví dụ: group_19.yml) với tất cả các tài nguyên trong đó (VPC, Subnets, Route Tables, NAT Gateway, EC2 Instances, và Security Groups).
+
 Bước 2: Triển khai CloudFormation Stack
-    -Mở AWS Management Console.
-    -Vào phần CloudFormation và chọn Create Stack.
-    -Chọn phương thức Upload a template file, và tải tệp main.yml lên.
-    -Chọn Next và nhập các giá trị tham số đầu vào (VD: IP của bạn cho phép SSH, KeyPair, CIDR blocks).
-    -Tiếp tục các bước theo hướng dẫn và triển khai stack.
+-Mở AWS Management Console.
+-Vào phần CloudFormation và chọn Create Stack.
+-Chọn phương thức Upload a template file, và tải tệp main.yml lên.
+-Chọn Next và nhập các giá trị tham số đầu vào (VD: IP của bạn cho phép SSH, KeyPair, CIDR blocks).
+-Tiếp tục các bước theo hướng dẫn và triển khai stack.
+
 Bước 3: Kiểm tra kết quả
-    -Sau khi stack được tạo thành công, bạn có thể kiểm tra thông tin đầu ra trong phần Outputs của CloudFormation Stack, ví dụ như các Instance ID, VPC ID.
-    -Truy cập vào instance Public qua SSH từ địa chỉ IP của bạn.
-    -Từ instance Public, bạn có thể truy cập vào instance Private thông qua SSH.
+-Sau khi stack được tạo thành công, bạn có thể kiểm tra thông tin đầu ra trong phần Outputs của CloudFormation Stack, ví dụ như các Instance ID, VPC ID.
+-Truy cập vào instance Public qua SSH từ địa chỉ IP của bạn.
+-Từ instance Public, bạn có thể truy cập vào instance Private thông qua SSH.
 
 ### Cách 2: Sử dụng AWS CLI
 Bước 1: Cấu hình AWS CLI
