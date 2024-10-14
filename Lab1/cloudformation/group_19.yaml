@@ -124,7 +124,7 @@ Resources:
       SecurityGroupIds: 
         - !Ref PublicEC2SecurityGroup
       KeyName: cloudfins
-      ImageId: ami-0ebfd941bbafe70c6  # AMI ID cần thay thế theo region của bạn
+      ImageId: ami-0ebfd941bbafe70c6  
 
   # EC2 Instance trong Private Subnet
   PrivateEC2Instance:
@@ -135,4 +135,4 @@ Resources:
       SecurityGroupIds: 
         - !Ref PrivateEC2SecurityGroup
       KeyName: cloudfins
-      ImageId: ami-0ebfd941bbafe70c6  # AMI ID cần thay thế theo region của bạn
+      ImageId: ami-0ebfd941bbafe70c6 
