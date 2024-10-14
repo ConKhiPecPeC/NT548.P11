@@ -58,11 +58,11 @@ Bước 1: Cấu hình AWS CLI
 Bước 2: Tạo CloudFormation Stack
     Sau khi đã cấu hình AWS CLI, triển khai tệp YAML bằng lệnh aws cloudformation create-stack. 
 
-```aws cloudformation create-stack \`
-    `--stack-name <TênStack> \`
-    `--template-body file://<ĐườngDẫnTớiTệpYaml> \`
-    `--parameters ParameterKey=MyIPAddress,ParameterValue=<ĐịaChỉIP>,ParameterKey=KeyPairName,ParameterValue=<TênKeyPair> \`
-    `--capabilities CAPABILITY_NAMED_IAM`
+    aws cloudformation create-stack \
+    --stack-name <TênStack> \
+    --template-body file://<ĐườngDẫnTớiTệpYaml> \
+    --parameters ParameterKey=MyIPAddress,ParameterValue=<ĐịaChỉIP>,ParameterKey=KeyPairName,ParameterValue=<TênKeyPair> \
+    --capabilities CAPABILITY_NAMED_IAM
 
 * --stack-name: Tên của stack mà bạn muốn tạo.
 * --template-body: Đường dẫn tới tệp YAML mà bạn đã tạo (sử dụng file:// trước đường dẫn).
@@ -71,6 +71,7 @@ Bước 2: Tạo CloudFormation Stack
 
 Bước 3: Kiểm tra trạng thái của Stack
     Sau khi chạy lệnh trên, bạn có thể kiểm tra trạng thái của stack để xem quá trình triển khai có thành công không
+
 `aws cloudformation describe-stacks --stack-name <TênStack>`
 
 Lệnh này sẽ trả về thông tin chi tiết về stack, bao gồm trạng thái hiện tại (CREATE_IN_PROGRESS, CREATE_COMPLETE, CREATE_FAILED, v.v.).
