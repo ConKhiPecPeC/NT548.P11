@@ -27,23 +27,23 @@ jobs:
       - name: Terraform Init
         id: init
         run: terraform init
-        working-directory: ./Terraform
+        working-directory: ./Lab2/Task1/Terraform
 
       - name: Terraform Validate
         id: validate
         run: terraform validate
-        working-directory: ./Terraform
+        working-directory: ./Lab2/Task1/Terraform
 
       - name: Checkov Security Check
         id: checkov
-        run: checkov -d ./Terraform
+        run: checkov -d ./Lab2/Task1/Terraform
 
       - name: Terraform Plan
         id: plan
         run: terraform plan
-        working-directory: ./Terraform
+        working-directory: ./Lab2/Task1/Terraform
 
       - name: Terraform Apply
         id: apply
         run: terraform apply --auto-approve
-        working-directory: ./Terraform
+        working-directory: ./Lab2/Task1/Terraform
