@@ -7,16 +7,6 @@ resource "aws_vpc" "vpc" {
     Name = "VPC"
   }
 }
-
-# Add this block to enable VPC Flow Logging
-resource "aws_flow_log" "vpc_flow_log" {
-  log_destination = format("arn:aws:logs:%s:%s:log-group:VPCFlowLogs", data.aws_caller_identity.current.account_id, var.region)
-  log_destination_type = "cloud-watch-logs"
-  traffic_type         = "ALL"  # Options: ACCEPT, REJECT, ALL
-  vpc_id               = aws_vpc.vpc.id
-}
-
-
 # Public Subnet
 resource "aws_subnet" "public_subnet" {
   vpc_id     = aws_vpc.vpc.id
@@ -50,24 +40,21 @@ resource "aws_internet_gateway" "gw" {
 resource "aws_default_security_group" "default_security_group" {
   vpc_id = aws_vpc.vpc.id
 
-  
   ingress {
-    protocol  = "-1"
+    protocol  = -1
+    self      = true
     from_port = 0
     to_port   = 0
-    cidr_blocks = []
   }
 
-  
   egress {
-    protocol  = "-1"
-    from_port = 0
-    to_port   = 0
-    cidr_blocks = []
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
-
   tags = {
-    Name = "Default_security_group"
+    name = "Default_security_group"
   }
 }
 

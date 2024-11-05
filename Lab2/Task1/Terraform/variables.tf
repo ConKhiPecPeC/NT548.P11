@@ -13,8 +13,4 @@ variable "ami" {
 variable "instance_type" {
     default = "t2.micro"
 }
-variable "region" {
-  type        = string
-  description = "AWS region"
-}
 
