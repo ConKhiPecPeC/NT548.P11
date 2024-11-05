@@ -10,7 +10,7 @@ resource "aws_vpc" "vpc" {
 
 # Add this block to enable VPC Flow Logging
 resource "aws_flow_log" "vpc_flow_log" {
-  log_destination      = "arn:aws:logs:${us-east-1}:${data.aws_caller_identity.current.account_id}:log-group:VPCFlowLogs"
+  log_destination = format("arn:aws:logs:%s:%s:log-group:VPCFlowLogs", data.aws_caller_identity.current.account_id, var.region)
   log_destination_type = "cloud-watch-logs"
   traffic_type         = "ALL"  # Options: ACCEPT, REJECT, ALL
   vpc_id               = aws_vpc.vpc.id
