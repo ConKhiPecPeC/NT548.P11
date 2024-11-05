@@ -54,13 +54,14 @@ module "ec2" {
   instance_type = var.instance_type
   public_subnet_id = module.vpc.public_subnet_id
   private_subnet_id = module.vpc.private_subnet_id
-  public_security_group = module.security_group.public_security_group
-  private_security_group = module.security_group.private_security_group
+  public_security_group_id = module.security_group.public_security_group_id
+  private_security_group_id = module.security_group.private_security_group_id
 }
 
 #Security Groups
 module "security_group" {
   source = "./modules/security-group"
   vpc_id = module.vpc.vpc_id
+  
 }
 
