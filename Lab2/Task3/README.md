@@ -10,11 +10,15 @@ Sử dụng Jenkins để quản lý quy trình CI/CD cho ứng dụng microserv
 - Có thể tích hợp thêm các công cụ kiểm tra bảo mật như Snyk hoặc Trivy để tăng cường tính an toàn của mã nguồn (tùy chọn).
 
 ## Công cụ
-**Code:**[SourceCode] (https://github.com/tuan-devops/kubernetes-sample-apps.git)
+**Code:**(https://github.com/tuan-devops/kubernetes-sample-apps.git)
+
 **Jenkins**
+
 **SonarQube**
+
 **Docker**
-**DockerHub**[Link](https://hub.docker.com/repository/docker/conkhipecpec/2048-jenkins)
+
+**DockerHub**(https://hub.docker.com/repository/docker/conkhipecpec/2048-jenkins)
 
 ## Run local
 Clone the project
