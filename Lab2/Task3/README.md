@@ -1,155 +1,62 @@
-# Overview
 
-Sample javascript application implementing the classic [2048 game](https://en.wikipedia.org/wiki/2048_(video_game)). Main project is based on the [game-2048 library](https://www.npmjs.com/package/game-2048) and [Webpack](https://webpack.js.org).
+# Task 3
 
-Main purpose is to serve as a demo for the [DOKS-CI-CD](https://github.com/digitalocean/container-blueprints/tree/main/DOKS-CI-CD) blueprint.
+Sử dụng Jenkins để quản lý quy trình CI/CD cho ứng dụng microservices
 
-## Requirements
+## Yêu cầu
 
-To complete all steps and deploy the `2048-game` sample application, you will need:
+- Sử dụng Jenkins để tự động hóa quá trình build, test và deploy ứng dụng microservices lên Docker, Kubernetes (hoặc một dịch vụ tương ứng).
+- Tích hợp SonarQube để kiểm tra chất lượng mã nguồn
+- Có thể tích hợp thêm các công cụ kiểm tra bảo mật như Snyk hoặc Trivy để tăng cường tính an toàn của mã nguồn (tùy chọn).
 
-1. A [DOKS](https://docs.digitalocean.com/products/kubernetes/quickstart) cluster configured and running.
-2. Latest [Kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl) version for Kubernetes interaction.
-3. [Git](https://git-scm.com/downloads) client for interacting with the [kubernetes-sample-apps](https://github.com/digitalocean/kubernetes-sample-apps) repository.
-4. [NodeJS](https://nodejs.org) and `npm` to build and test the 2048-game application code.
-5. [Docker Desktop](https://www.docker.com/products/docker-desktop) to build and test the 2048-game application docker image locally.
+## Công cụ
+**Code:**[SourceCode] (https://github.com/tuan-devops/kubernetes-sample-apps.git)
+**Jenkins**
+**SonarQube**
+**Docker**
+**DockerHub**[Link](https://hub.docker.com/repository/docker/conkhipecpec/2048-jenkins)
 
-## Building the 2048 Game Application
+## Run local
+Clone the project
 
-Main project is `javascript` based, hence you can build the application via `npm`:
-
-```shell
-npm install --include=dev
-
-npm run build
+```bash
+  git clone https://github.com/tuan-devops/kubernetes-sample-apps.git
 ```
 
-You can test the application locally, by running below command:
+Go to the project directory
 
-```shell
-npm start
+```bash
+  cd game-2048-example
 ```
 
-Above command will start a web server in development mode, which you can access at [localhost:8080](http://localhost:8080). Please visit the main library [configuration](https://www.npmjs.com/package/game-2048#config) section from the public npm registry to see all available options.
+Build Docker Image
 
-## Building the Docker Image
-
-A sample [Dockerfile](./Dockerfile) is provided in this repository as well, to help you get started with dockerizing the 2048 game app. Depending on the `NODE_ENV` environment variable, you can create and publish a `development` or `production` ready Docker image.
-
-First, you need to clone this repository (if not already):
-
-```shell
-git clone https://github.com/digitalocean/kubernetes-sample-apps.git
+```bash
+  docker build -t <IMAGE_NAME> .
 ```
 
-Then, change directory to your local copy:
+Run docker container
 
-```shell
-cd kubernetes-sample-apps
+```bash
+  docker run -d -p 80:8080 --name <CONTAINER_NAME> <IMAGE_NAME>
 ```
 
-Next, issue below command to build the docker image for the 2048 game app, Below examples assume you already have a [DigitalOcean Docker Registry](https://docs.digitalocean.com/products/container-registry) set up (make sure to replace the `<>` placeholders accordingly):
+## Jenkins
+Các plugin cài đặt 
+- Docker Plugin
+- Docker Pineline 
+- GitHub Integration Plugin 
+- Publish over SSH  
+- Sonar Quality Gates Plugin 
+- SonarQube Scanner for Jenkins
+- Và các plugins được gợi ý khi tiến hành cài đặt jenkins....
 
-```shell
-docker build -t registry.digitalocean.com/<YOUR_DOCKER_REGISTRY_NAME_HERE>/2048-game ./game-2048-example
-```
-
-**Note:**
-
-The sample [Dockerfile](./Dockerfile) provided in this repository is using the [multistage build](https://docs.docker.com/develop/develop-images/multistage-build) feature. It means, the final image contains only the application assets (build process artifacts are automatically discarded).
-
-Then, you can issue bellow command to launch the `2048-game` container (make sure to replace the `<>` placeholders accordingly):
-
-```shell
-docker run --rm -it -p 8080:8080 registry.digitalocean.com/<YOUR_DOCKER_REGISTRY_NAME_HERE>/2048-game
-```
-
-Now, visit [localhost:8080](http://localhost:8080) to check the 2048 game app in your web browser. Finally, you can push the image to your DigitalOcean docker registry (make sure to replace the `<>` placeholders accordingly):
-
-```shell
-docker push registry.digitalocean.com/<YOUR_DOCKER_REGISTRY_NAME_HERE>/2048-game
-```
-
-**Note:**
-
-Pushing images to your DigitalOcean docker registry is possible only after a successful authentication. Please read the official DigitalOcean [guide](https://docs.digitalocean.com/products/container-registry/how-to/use-registry-docker-kubernetes) and follow the steps. [Integrating with Kubernetes](https://docs.digitalocean.com/products/container-registry/how-to/use-registry-docker-kubernetes/#kubernetes-integration) step is important as well.
-
-## Deploying to Kubernetes
-
-The [kustomization manifest](kustomize/kustomization.yaml) provided in this repository will get you started with deploying the `2048-game` Kubernetes resources.
-
-First, you need to clone this repository (if not already):
-
-```shell
-git clone https://github.com/digitalocean/kubernetes-sample-apps.git
-```
-
-Then, change directory to your local copy:
-
-```shell
-cd kubernetes-sample-apps
-```
-
-Next, edit the game-2048 [deployment manifest](kustomize/resources/deployment.yaml) using your favorite text editor (preferably with YAML lint support), and replace the `<>` placeholders. For example, you can use [VS Code](https://code.visualstudio.com/):
-
-```shell
-code game-2048-example/kustomize/resources/deployment.yaml
-```
-
-Now, create 2048 game Kubernetes resources using the kubectl kustomize option (`-k` flag):
-
-```shell
-kubectl apply -k game-2048-example/kustomize
-```
-
-The output looks similar to:
-
-```text
-namespace/game-2048 created
-service/game-2048 created
-deployment.apps/game-2048 created
-```
-
-If everything went well, you should have a new Kubernetes namespace created named `game-2048`. Inside the new namespace, you can inspect all resources created by the kustomization manifest from the sample apps repository (all game-2048 application pods should be up and running):
-
-```shell
-kubectl get all -n game-2048
-```
-
-The output looks similar to:
-
-```text
-NAME                            READY   STATUS    RESTARTS   AGE
-pod/game-2048-f96755947-dgj7z   1/1     Running   0          5m19s
-
-NAME                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)     AGE
-service/game-2048   ClusterIP   10.245.120.202   <none>        8080/TCP    5m21s
-
-NAME                        READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/game-2048   1/1     1            1           5m22s
-
-NAME                                  DESIRED   CURRENT   READY   AGE
-replicaset.apps/game-2048-f96755947   1         1         1       5m22s
-```
-
-Finally, port-forward the `game-2048` service using `kubectl`:
-
-```shell
-kubectl port-forward service/game-2048 -n game-2048 8080:8080
-```
-
-Open a web browser and point to [localhost:8080](http://localhost:8080/). You should see the `game-2048` welcome page:
-
-![2048 Game Welcome Page](assets/images/game-2048-welcome-page.png)
-
-## Cleaning Up
-
-To clean up all Kubernetes resources created by the 2048 game application, below command must be used:
-
-```shell
-kubectl delete ns game-2048
-```
-
-**Note:**
-
-Kubectl kustomize subcommand has a delete option that can be used - `kubectl delete -k game-2048-example/kustomize`. But, it won't work well in this case because if the namespace is deleted first then the remaining operations will fail.
+## Các stage trong CI/CD pineline
+1. Check out SCM
+2. Scan code với SonarQube
+3. Check code đã scan với Quality gate
+4. Build docker image
+5. Push docker image lên Docker Hub
+6. SSH tới Server Deployment 
+7. Pull image từ DockerHub về và run images 
+Nếu là bản cập nhật images mới thì dừng và xóa conatiner hiện tại pull image mới và chạy lại container khác
